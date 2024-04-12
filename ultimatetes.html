@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domande di Grammatica Inglese</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 50vh; /* Imposta l'altezza del body al 100% della viewport per centrare verticalmente */
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .question {
+          margin-bottom: 20px;
+          text-align: center; /* Centra il testo all'interno della domanda */
+        }
+    
+        .question p {
+          margin-bottom: 10px;
+        }
+    
+        .options {
+          display: flex;
+          flex-direction: column;
+          align-items: center; /* Centra le opzioni risposte */
+        }
+    
+        .option {
+          margin-bottom: 10px;
+        }
+    
+        #result {
+          text-align: center;
+          display: none;
+        }
+    
+        .petal {
+          position: absolute;
+          background-color: #ff69b4; /* Colore dei petali */
+          width: 10px;
+          height: 10px;
+          border-radius: 50%; /* Forma circolare */
+          animation: explode linear; /* Animazione esplosione */
+          z-index: 1; /* Per farli apparire sopra eventuali altri elementi */
+        }
+    
+        @keyframes explode {
+          0% {
+            opacity: 0; /* Opacità iniziale */
+            transform: scale(0); /* Dimensione iniziale */
+          }
+          100% {
+            opacity: 1; /* Opacità finale */
+            transform: scale(1); /* Dimensione finale */
+          }
+        }
+  </style>
+
+</head>
+<body>
+
+
+    <h1>Verifica a Risposte Multiple</h1>
+
+<!--<div id="progress" style="margin-bottom: 10px;"></div>  Elemento per visualizzare il progresso -->
+
+<div id="page1" class="page">
+    <h2>Domanda 1</h2>
+    <p>Qual è la differenza tra "there," "their," e "they're"?</p>
+    <ul>
+        <li><input type="radio" name="q1" value="A"> A) Luogo, possesso, contrazione di "they are".</li>
+        <li><input type="radio" name="q1" value="B"> B) Aggettivo, pronome, avverbio.</li>
+        <li><input type="radio" name="q1" value="C"> C) Verbo, pronome soggetto, articolo determinativo.</li>
+    </ul>
+    <button onclick="nextPage(1)">Prossima Pagina</button>
+</div>
+
+<div id="page2" class="page" style="display: none;">
+    <h2>Domanda 2</h2>
+    <p>Qual è la differenza tra "much" e "many"?</p>
+    <ul>
+        <li><input type="radio" name="q2" value="A"> A) "Much" si usa con sostantivi numerabili, "many" con sostantivi non numerabili.</li>
+        <li><input type="radio" name="q2" value="B"> B) Entrambi si usano con sostantivi numerabili.</li>
+        <li><input type="radio" name="q2" value="C"> C) Entrambi si usano con sostantivi non numerabili.</li>
+    </ul>
+    <button onclick="nextPage(2)">Prossima Pagina</button>
+</div>
+
+<div id="page3" class="page" style="display: none;">
+    <h2>Domanda 3</h2>
+    <p>Qual è la regola per la formazione del plurale dei sostantivi in inglese?</p>
+    <ul>
+        <li><input type="radio" name="q3" value="A"> A) Aggiungere "-s" alla fine della parola.</li>
+        <li><input type="radio" name="q3" value="B"> B) Aggiungere "-es" alla fine della parola.</li>
+        <li><input type="radio" name="q3" value="C"> C) Dipende dalla lettera finale della parola.</li>
+    </ul>
+    <button onclick="nextPage(3)">Prossima Pagina</button>
+</div>
+
+<div id="page4" class="page" style="display: none;">
+    <h2>Domanda 4</h2>
+    <p>Cosa significa "present continuous tense"? Fornisci un esempio.</p>
+    <ul>
+        <li><input type="radio" name="q4" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione. Esempio: "I am writing."</li>
+        <li><input type="radio" name="q4" value="B"> B) Indica un'azione abituale nel passato. Esempio: "I used to write."</li>
+        <li><input type="radio" name="q4" value="C"> C) Indica un'azione futura. Esempio: "I will write."</li>
+    </ul>
+    <button onclick="nextPage(4)">Prossima Pagina</button>
+</div>
+
+<div id="page5" class="page" style="display: none;">
+    <h2>Domanda 5</h2>
+    <p>Quando si usa l'articolo determinativo "the" e quando si usa l'articolo indeterminativo "a" o "an"?</p>
+    <ul>
+        <li><input type="radio" name="q5" value="A"> A) "The" si usa con nomi singolari specifici, "a" o "an" con nomi singolari non specifici.</li>
+        <li><input type="radio" name="q5" value="B"> B) "The" si usa con nomi singolari non specifici, "a" o "an" con nomi singolari specifici.</li>
+        <li><input type="radio" name="q5" value="C"> C) "The" si usa sempre con nomi singolari.</li>
+    </ul>
+    <button onclick="nextPage(5)">Prossima Pagina</button>
+</div>
+
+<div id="page6" class="page" style="display: none;">
+    <h2>Domanda 6</h2>
+    <p>Qual è la differenza tra "its" e "it's"?</p>
+    <ul>
+        <li><input type="radio" name="q6" value="A"> A) "Its" è il genitivo del pronome "it", mentre "it's" è la contrazione di "it is" o "it has".</li>
+        <li><input type="radio" name="q6" value="B"> B) "Its" è un aggettivo possessivo, mentre "it's" è un pronome soggetto.</li>
+        <li><input type="radio" name="q6" value="C"> C) "Its" è un pronome dimostrativo, mentre "it's" è un pronome riflessivo.</li>
+    </ul>
+    <button onclick="nextPage(6)">Prossima Pagina</button>
+</div>
+
+<div id="page7" class="page" style="display: none;">
+    <h2>Domanda 7</h2>
+    <p>Spiega la differenza tra "to," "too," e "two."</p>
+    <ul>
+        <li><input type="radio" name="q7" value="A"> A) "To" è una preposizione, "too" è un avverbio che indica eccesso, mentre "two" è un numero cardinale.</li>
+        <li><input type="radio" name="q7" value="B"> B) "To" è un avverbio di tempo, "too" è un avverbio di modo, mentre "two" è un avverbio di luogo.</li>
+        <li><input type="radio" name="q7" value="C"> C) "To" è un articolo indeterminativo, "too" è un pronome indefinito, mentre "two" è un pronome personale soggetto.</li>
+    </ul>
+    <button onclick="nextPage(7)">Prossima Pagina</button>
+</div>
+
+<div id="page8" class="page" style="display: none;">
+    <h2>Domanda 8</h2>
+    <p>Cosa indica il "present perfect tense"?</p>
+    <ul>
+        <li><input type="radio" name="q8" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione.</li>
+        <li><input type="radio" name="q8" value="B"> B) Indica un'azione che è stata completata in un tempo non specificato prima del presente.</li>
+        <li><input type="radio" name="q8" value="C"> C) Indica un'azione che è stata completata prima di un'altra azione nel passato.</li>
+    </ul>
+    <button onclick="nextPage(8)">Prossima Pagina</button>
+</div>
+
+<div id="page9" class="page" style="display: none;">
+    <h2>Domanda 9</h2>
+    <p>Cosa indica il tempo "past perfect"?</p>
+    <ul>
+        <li><input type="radio" name="q9" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione.</li>
+        <li><input type="radio" name="q9" value="B"> B) Indica un'azione che è stata completata in un tempo non specificato prima del presente.</li>
+        <li><input type="radio" name="q9" value="C"> C) Indica un'azione che è stata completata prima di un'altra azione nel passato.</li>
+    </ul>
+    <button onclick="nextPage(9)">Prossima Pagina</button>
+</div>
+
+<div id="page10" class="page" style="display: none;">
+    <h2>Domanda 10</h2>
+    <p>Cosa indica il tempo futuro "future continuous"?</p>
+    <ul>
+        <li><input type="radio" name="q10" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione.</li>
+        <li><input type="radio" name="q10" value="B"> B) Indica un'azione che sarà in corso di svolgimento in un momento specificato nel futuro.</li>
+        <li><input type="radio" name="q10" value="C"> C) Indica un'azione che è stata completata in un tempo non specificato prima del presente.</li>
+    </ul>
+    <button onclick="nextPage(10)">Prossima Pagina</button>
+</div>
+
+<div id="page11" class="page" style="display: none;">
+    <h2>Domanda 11</h2>
+    <p>Qual è la differenza tra "affect" e "effect"?</p>
+    <ul>
+        <li><input type="radio" name="q11" value="A"> A) "Affect" è un verbo che indica influenza o emozione, mentre "effect" è un sostantivo che indica il risultato di un'azione.</li>
+        <li><input type="radio" name="q11" value="B"> B) "Affect" è un sostantivo che indica il risultato di un'azione, mentre "effect" è un verbo che indica influenza o emozione.</li>
+        <li><input type="radio" name="q11" value="C"> C) Entrambe le parole hanno lo stesso significato.</li>
+    </ul>
+    <button onclick="nextPage(11)">Prossima Pagina</button>
+</div>
+
+<div id="page12" class="page" style="display: none;">
+    <h2>Domanda 12</h2>
+    <p>Spiega la differenza tra "farther" e "further".</p>
+    <ul>
+        <li><input type="radio" name="q12" value="A"> A) Entrambe le parole hanno lo stesso significato.</li>
+        <li><input type="radio" name="q12" value="B"> B) "Farther" si riferisce a distanze fisiche, mentre "further" si riferisce a concetti o progressi non fisici.</li>
+        <li><input type="radio" name="q12" value="C"> C) "Farther" si usa con sostantivi singolari, mentre "further" si usa con sostantivi plurali.</li>
+    </ul>
+    <button onclick="nextPage(12)">Prossima Pagina</button>
+</div>
+
+<div id="page13" class="page" style="display: none;">
+    <h2>Domanda 13</h2>
+    <p>Cosa indica il "past continuous tense"?</p>
+    <ul>
+        <li><input type="radio" name="q13" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione.</li>
+        <li><input type="radio" name="q13" value="B"> B) Indica un'azione che era in corso di svolgimento in un momento specifico nel passato.</li>
+        <li><input type="radio" name="q13" value="C"> C) Indica un'azione che è stata completata prima di un'altra azione nel passato.</li>
+    </ul>
+    <button onclick="nextPage(13)">Prossima Pagina</button>
+</div>
+
+<div id="page14" class="page" style="display: none;">
+    <h2>Domanda 14</h2>
+    <p>Cosa indica il "future perfect continuous"?</p>
+    <ul>
+        <li><input type="radio" name="q14" value="A"> A) Indica un'azione che sarà in corso di svolgimento in un momento specifico nel futuro.</li>
+        <li><input type="radio" name="q14" value="B"> B) Indica un'azione che sarà stata in corso di svolgimento per un certo periodo di tempo prima di un certo momento nel futuro.</li>
+        <li><input type="radio" name="q14" value="C"> C) Indica un'azione che sarà stata completata prima di un certo momento nel futuro.</li>
+    </ul>
+    <button onclick="nextPage(14)">Prossima Pagina</button>
+</div>
+
+<div id="page15" class="page" style="display: none;">
+    <h2>Domanda 15</h2>
+    <p>Qual è la regola per la formazione del comparativo e del superlativo degli aggettivi in inglese?</p>
+    <ul>
+        <li><input type="radio" name="q15" value="A"> A) Aggiungere "-er" per il comparativo e "-est" per il superlativo.</li>
+        <li><input type="radio" name="q15" value="B"> B) Aggiungere "-ier" per il comparativo e "-iest" per il superlativo.</li>
+        <li><input type="radio" name="q15" value="C"> C) Dipende dalla lunghezza della parola.</li>
+    </ul>
+    <button onclick="nextPage(15)">Prossima Pagina</button>
+</div>
+
+<div id="page16" class="page" style="display: none;">
+    <h2>Domanda 16</h2>
+    <p>Qual è la differenza tra "lie" e "lay"?</p>
+    <ul>
+        <li><input type="radio" name="q16" value="A"> A) Entrambe le parole hanno lo stesso significato.</li>
+        <li><input type="radio" name="q16" value="B"> B) "Lie" è un verbo intransitivo che indica la posizione di una persona o di un animale in riposo, mentre "lay" è un verbo transitivo che indica la posizione di un oggetto.</li>
+        <li><input type="radio" name="q16" value="C"> C) "Lie" è un sostantivo che indica una menzogna, mentre "lay" è un verbo che indica la posizione di una persona o di un animale in riposo.</li>
+    </ul>
+    <button onclick="nextPage(16)">Prossima Pagina</button>
+</div>
+
+<div id="page17" class="page" style="display: none;">
+    <h2>Domanda 17</h2>
+    <p>Cosa indica il "past perfect continuous"?</p>
+    <ul>
+        <li><input type="radio" name="q17" value="A"> A) Indica un'azione che era in corso di svolgimento in un momento specifico nel passato.</li>
+        <li><input type="radio" name="q17" value="B"> B) Indica un'azione che era stata completata prima di un'altra azione nel passato.</li>
+        <li><input type="radio" name="q17" value="C"> C) Indica un'azione che era stata in corso di svolgimento per un certo periodo di tempo prima di un certo momento nel passato.</li>
+    </ul>
+    <button onclick="nextPage(17)">Prossima Pagina</button>
+</div>
+
+<div id="page18" class="page" style="display: none;">
+    <h2>Domanda 18</h2>
+    <p>Cosa indica il "future perfect"?</p>
+    <ul>
+        <li><input type="radio" name="q18" value="A"> A) Indica un'azione che sarà in corso di svolgimento in un momento specifico nel futuro.</li>
+        <li><input type="radio" name="q18" value="B"> B) Indica un'azione che sarà stata completata prima di un certo momento nel futuro.</li>
+        <li><input type="radio" name="q18" value="C"> C) Indica un'azione che potrebbe verificarsi nel futuro, ma non è ancora confermata.</li>
+    </ul>
+    <button onclick="nextPage(18)">Prossima Pagina</button>
+</div>
+
+<div id="page19" class="page" style="display: none;">
+    <h2>Domanda 19</h2>
+    <p>Qual è la differenza tra "whose" e "who's"?</p>
+    <ul>
+        <li><input type="radio" name="q19" value="A"> A) Entrambe le parole hanno lo stesso significato.</li>
+        <li><input type="radio" name="q19" value="B"> B) "Whose" è un pronome possessivo, mentre "who's" è la contrazione di "who is" o "who has".</li>
+        <li><input type="radio" name="q19" value="C"> C) "Whose" è un pronome relativo, mentre "who's" è un pronome interrogativo.</li>
+    </ul>
+    <button onclick="nextPage(19)">Prossima Pagina</button>
+</div>
+
+<div id="page20" class="page" style="display: none;">
+    <h2>Domanda 20</h2>
+    <p>Cosa indica il tempo futuro "future perfect"?</p>
+    <ul>
+        <li><input type="radio" name="q20" value="A"> A) Indica un'azione che è in corso di svolgimento al momento della comunicazione.</li>
+        <li><input type="radio" name="q20" value="B"> B) Indica un'azione che sarà completata prima di un certo momento nel futuro.</li>
+        <li><input type="radio" name="q20" value="C"> C) Indica un'azione che potrebbe verificarsi nel futuro, ma non è ancora confermata.</li>
+    </ul>
+    <button onclick="prevPage(20)">Pagina Precedente</button>
+    <button onclick="checkAnswers()">Verifica Risposte</button> <!-- Aggiunto pulsante per avviare la verifica -->
+
+</div>
+
+
+<div id="result" style="display: none;">
+    <h2>Risultato:</h2>
+    <p id="score"></p>
+  </div> <!-- Aggiunto elemento per visualizzare il risultato -->
+  
+
+
+  <progress id="progressBar" max="100" value="0"></progress> <!-- Aggiunto elemento per la barra di avanzamento -->
+  
+
+  <!-- Script per generare la pioggia di petali -->
+<script>
+
+    const totalQuestions = 20; // Numero totale di domande
+    let currentPage = 1; // Inizializza la pagina corrente
+    
+    function updateProgress() {
+        const progressBar = document.getElementById('progressBar');
+        const percentage = (currentPage / totalQuestions) * 100; // Calcola la percentuale di avanzamento
+        progressBar.value = percentage; // Aggiorna il valore della barra di avanzamento
+        
+    }
+
+    function nextPage() {
+        document.getElementById('page' + currentPage).style.display = 'none';
+        currentPage++;
+        if (currentPage <= totalQuestions) {
+            document.getElementById('page' + currentPage).style.display = 'block';
+            updateProgress(); // Aggiorna la barra di avanzamento solo se ci sono altre pagine da mostrare
+        }
+    }
+
+    function prevPage(currentPage) {
+        document.getElementById('page' + currentPage).style.display = 'none';
+        currentPage--;
+        if (currentPage >= 1) {
+            document.getElementById('page' + currentPage).style.display = 'block';
+            updateProgress(); // Aggiorna il progresso
+        }
+    }
+
+    // Funzione per generare una pioggia di petali
+    function generatePetals() {
+      const petalsContainer = document.createElement('div');
+      petalsContainer.classList.add('petals-container');
+      for (let i = 0; i < 200; i++) { // Numero di petali
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.style.left = `${Math.random() * window.innerWidth}px`; // Posizione casuale orizzontale
+        petal.style.top = `${Math.random() * window.innerHeight}px`; // Posizione casuale verticale
+        petal.style.animationDuration = `${Math.random() * 1 + 1}s`; // Durata dell'animazione casuale
+        petalsContainer.appendChild(petal);
+      }
+      document.body.appendChild(petalsContainer);
+    }
+
+
+
+    // Funzione per verificare le risposte
+ function checkAnswers() {
+  const totalQuestions = 20; // Numero totale di domande
+  let correctAnswers = 0; // Inizializziamo il contatore delle risposte corrette
+  
+  // Array contenente le risposte corrette per ogni domanda
+  const correctResponses = ['A', 'A', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'A', 'B'];
+  
+  // Ciclo attraverso le domande per verificare le risposte corrette
+  for (let i = 1; i <= totalQuestions; i++) {
+    const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selectedAnswer) { // Se manca una risposta, esce dalla funzione senza fare nulla
+      return;
+    }
+    if (selectedAnswer && selectedAnswer.value === correctResponses[i - 1]) { // confronta la risposta selezionata con la risposta corretta
+      correctAnswers++; // Incrementa il contatore delle risposte corrette se la risposta è corretta
+    }
+  }
+  
+  // Calcola il punteggio in percentuale
+  const score = (correctAnswers / totalQuestions) * 100;
+  
+  // Visualizza il punteggio
+  const resultElement = document.getElementById('result');
+  resultElement.style.display = 'block';
+  resultElement.textContent = `Punteggio: ${score.toFixed(2)}%`;
+  
+  // Avvia la pioggia di petali se il punteggio è superiore al 60%
+  if (score >= 60) {
+    generatePetals();
+  }
+}
+
+  // Aggiorna il progresso all'avvio dello script
+  updateProgress();
+</script>
+
+</body>
+</html>
