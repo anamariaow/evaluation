@@ -83,7 +83,6 @@
             transform: translateY(100vh);
           }
         }
-
   </style>
 
 </head>
@@ -91,6 +90,7 @@
 
 
     <h1>Verifica a Risposte Multiple</h1>
+    
 
 <!--<div id="progress" style="margin-bottom: 10px;"></div>  Elemento per visualizzare il progresso -->
 
@@ -321,7 +321,6 @@
     <button onclick="checkAnswers()">Verifica Risposte</button> <!-- Aggiunto pulsante per avviare la verifica -->
 </div>
 
-
 <div id="result" style="display: none;">
     <h2>Risultato:</h2>
     <p id="score"></p>
@@ -331,6 +330,7 @@
 
   <progress id="progressBar" max="100" value="0"></progress> <!-- Aggiunto elemento per la barra di avanzamento -->
   
+
   <!-- Pioggia di petali -->
   <div id="petalsContainer"></div>
 
@@ -352,7 +352,7 @@
     function nextPage() {
         document.getElementById('page' + currentPage).style.display = 'none';
         currentPage++;
-        if (currentPage <= totalQuestions) {
+        if (currentPage <= totalQuestions+1) {
             document.getElementById('page' + currentPage).style.display = 'block';
             updateProgress(); // Aggiorna la barra di avanzamento solo se ci sono altre pagine da mostrare
         }
@@ -366,6 +366,8 @@
             updateProgress(); // Aggiorna il progresso
         }
     }
+
+    
 
     // Funzione per generare una pioggia di petali
     function generatePetals() {
@@ -382,6 +384,7 @@
       document.body.appendChild(petalsContainer);
     }
 
+
     // Funzione per generare una pioggia di gocce d'acqua
     function generateRain() {
       const rainContainer = document.createElement('div');
@@ -395,41 +398,42 @@
       }
       document.body.appendChild(rainContainer);
     }
+    
 
     // Funzione per verificare le risposte
     function checkAnswers() {
-       const totalQuestions = 20; // Numero totale di domande
-       let correctAnswers = 0; // Inizializziamo il contatore delle risposte corrette
+      const totalQuestions = 20; // Numero totale di domande
+      let correctAnswers = 0; // Inizializziamo il contatore delle risposte corrette
   
-       // Array contenente le risposte corrette per ogni domanda
-       const correctResponses = ['A', 'A', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'A', 'B'];
+      // Array contenente le risposte corrette per ogni domanda
+      const correctResponses = ['A', 'A', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'A', 'B'];
   
-       // Ciclo attraverso le domande per verificare le risposte corrette
-       for (let i = 1; i <= totalQuestions; i++) {
-         const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+      // Ciclo attraverso le domande per verificare le risposte corrette
+      for (let i = 1; i <= totalQuestions; i++) {
+        const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
         if (!selectedAnswer) { // Se manca una risposta, esce dalla funzione senza fare nulla
-           return;
+          return;
         }
         if (selectedAnswer && selectedAnswer.value === correctResponses[i - 1]) { // confronta la risposta selezionata con la risposta corretta
           correctAnswers++; // Incrementa il contatore delle risposte corrette se la risposta è corretta
         }
-       }
+      }
   
-        // Calcola il punteggio in percentuale
-        const score = (correctAnswers / totalQuestions) * 100;
+      // Calcola il punteggio in percentuale
+      const score = (correctAnswers / totalQuestions) * 100;
   
-        // Visualizza il punteggio
-        const resultElement = document.getElementById('result');
-        resultElement.style.display = 'block';
-        resultElement.textContent = `Punteggio: ${score.toFixed(2)}%`;
+      // Visualizza il punteggio
+      const resultElement = document.getElementById('result');
+      resultElement.style.display = 'block';
+      resultElement.textContent = `Punteggio: ${score.toFixed(2)}%`;
   
-        // Avvia la pioggia di petali se il punteggio è superiore al 60%
-        if (score >= 60) {
-          generatePetals();
-        }
-        if (score < 60) {
+      // Avvia la pioggia di petali se il punteggio è superiore al 60%
+      if (score >= 60) {
+        generatePetals(); // Se il punteggio è maggiore o uguale al 60%, avvia l'esplosione di petali
+      } 
+      if (score < 60) {
         generateRain(); // Se il punteggio è inferiore al 60%, avvia la pioggia normale
-        }
+      }
     }
 
   // Aggiorna il progresso all'avvio dello script
