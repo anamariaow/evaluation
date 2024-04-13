@@ -14,6 +14,7 @@
           justify-content: center;
           align-items: center;
           height: 50vh; /* Imposta l'altezza del body al 100% della viewport per centrare verticalmente */
+          position: relative; /* Aggiunto position: relative per il posizionamento degli elementi figlio */
         }
     
         h1 {
@@ -53,6 +54,15 @@
           animation: explode linear; /* Animazione esplosione */
           z-index: 1; /* Per farli apparire sopra eventuali altri elementi */
         }
+
+        .raindrop {
+          position: absolute;
+          background-color: #00f;
+          width: 2px;
+          height: 15px;
+          animation: fall linear infinite;
+          z-index: 1; /* Per farli apparire sopra eventuali altri elementi */
+        }
     
         @keyframes explode {
           0% {
@@ -64,6 +74,16 @@
             transform: scale(1); /* Dimensione finale */
           }
         }
+
+        @keyframes fall {
+          0% {
+            transform: translateY(-50px);
+          }
+          100% {
+            transform: translateY(100vh);
+          }
+        }
+
   </style>
 
 </head>
@@ -291,9 +311,14 @@
         <li><input type="radio" name="q20" value="B"> B) Indica un'azione che sarà completata prima di un certo momento nel futuro.</li>
         <li><input type="radio" name="q20" value="C"> C) Indica un'azione che potrebbe verificarsi nel futuro, ma non è ancora confermata.</li>
     </ul>
-    <button onclick="prevPage(20)">Pagina Precedente</button>
-    <button onclick="checkAnswers()">Verifica Risposte</button> <!-- Aggiunto pulsante per avviare la verifica -->
+    <button onclick="nextPage(20)">Verifica punteggio</button>
 
+</div>
+
+<div id="page21" class="page" style="display: none;">
+    <h2>Punteggio Finale:</h2>
+    <p id="finalScoreValue"></p>
+    <button onclick="checkAnswers()">Verifica Risposte</button> <!-- Aggiunto pulsante per avviare la verifica -->
 </div>
 
 
@@ -306,6 +331,10 @@
 
   <progress id="progressBar" max="100" value="0"></progress> <!-- Aggiunto elemento per la barra di avanzamento -->
   
+  <!-- Pioggia di petali -->
+  <div id="petalsContainer"></div>
+
+  <div id="rainContainer"></div>
 
   <!-- Script per generare la pioggia di petali -->
 <script>
@@ -353,40 +382,55 @@
       document.body.appendChild(petalsContainer);
     }
 
-
+    // Funzione per generare una pioggia di gocce d'acqua
+    function generateRain() {
+      const rainContainer = document.createElement('div');
+      rainContainer.classList.add('rain-container');
+      for (let i = 0; i < 100; i++) { // Numero di gocce d'acqua
+        const raindrop = document.createElement('div');
+        raindrop.classList.add('raindrop');
+        raindrop.style.left = `${Math.random() * window.innerWidth}px`; // Posizione casuale orizzontale
+        raindrop.style.animationDuration = `${Math.random() * 2 + 1}s`; // Durata dell'animazione casuale
+        rainContainer.appendChild(raindrop);
+      }
+      document.body.appendChild(rainContainer);
+    }
 
     // Funzione per verificare le risposte
- function checkAnswers() {
-  const totalQuestions = 20; // Numero totale di domande
-  let correctAnswers = 0; // Inizializziamo il contatore delle risposte corrette
+    function checkAnswers() {
+       const totalQuestions = 20; // Numero totale di domande
+       let correctAnswers = 0; // Inizializziamo il contatore delle risposte corrette
   
-  // Array contenente le risposte corrette per ogni domanda
-  const correctResponses = ['A', 'A', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'A', 'B'];
+       // Array contenente le risposte corrette per ogni domanda
+       const correctResponses = ['A', 'A', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'A', 'B'];
   
-  // Ciclo attraverso le domande per verificare le risposte corrette
-  for (let i = 1; i <= totalQuestions; i++) {
-    const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
-    if (!selectedAnswer) { // Se manca una risposta, esce dalla funzione senza fare nulla
-      return;
+       // Ciclo attraverso le domande per verificare le risposte corrette
+       for (let i = 1; i <= totalQuestions; i++) {
+         const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selectedAnswer) { // Se manca una risposta, esce dalla funzione senza fare nulla
+           return;
+        }
+        if (selectedAnswer && selectedAnswer.value === correctResponses[i - 1]) { // confronta la risposta selezionata con la risposta corretta
+          correctAnswers++; // Incrementa il contatore delle risposte corrette se la risposta è corretta
+        }
+       }
+  
+        // Calcola il punteggio in percentuale
+        const score = (correctAnswers / totalQuestions) * 100;
+  
+        // Visualizza il punteggio
+        const resultElement = document.getElementById('result');
+        resultElement.style.display = 'block';
+        resultElement.textContent = `Punteggio: ${score.toFixed(2)}%`;
+  
+        // Avvia la pioggia di petali se il punteggio è superiore al 60%
+        if (score >= 60) {
+          generatePetals();
+        }
+        if (score < 60) {
+        generateRain(); // Se il punteggio è inferiore al 60%, avvia la pioggia normale
+        }
     }
-    if (selectedAnswer && selectedAnswer.value === correctResponses[i - 1]) { // confronta la risposta selezionata con la risposta corretta
-      correctAnswers++; // Incrementa il contatore delle risposte corrette se la risposta è corretta
-    }
-  }
-  
-  // Calcola il punteggio in percentuale
-  const score = (correctAnswers / totalQuestions) * 100;
-  
-  // Visualizza il punteggio
-  const resultElement = document.getElementById('result');
-  resultElement.style.display = 'block';
-  resultElement.textContent = `Punteggio: ${score.toFixed(2)}%`;
-  
-  // Avvia la pioggia di petali se il punteggio è superiore al 60%
-  if (score >= 60) {
-    generatePetals();
-  }
-}
 
   // Aggiorna il progresso all'avvio dello script
   updateProgress();
